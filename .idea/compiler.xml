@@ -10,10 +10,14 @@
         <module name="Vodafone" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="registration-login-demo" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Vodafone" options="-parameters" />
+      <module name="registration-login-demo" options="-parameters" />
     </option>
   </component>
 </project>

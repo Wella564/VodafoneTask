@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -33,19 +30,22 @@ public class SpringSecurity {
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/index").permitAll()
-                                .requestMatchers("/loggedin").hasAnyRole("ADMIN","USER")
+                                .requestMatchers("/").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
-                                .requestMatchers("/", "/index").permitAll()
+                                .requestMatchers("/loggedin").authenticated()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/loggedin",true)
+                                .defaultSuccessUrl("/loggedin")
                                 .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
+                                .logoutSuccessUrl("/index")
+
+
                 );
         return http.build();
     }
@@ -56,5 +56,4 @@ public class SpringSecurity {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
-
 }
