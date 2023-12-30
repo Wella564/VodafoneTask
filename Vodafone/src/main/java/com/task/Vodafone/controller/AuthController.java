@@ -1,6 +1,5 @@
 package com.task.Vodafone.controller;
 
-
 import jakarta.validation.Valid;
 import com.task.Vodafone.dto.UserDto;
 import com.task.Vodafone.entity.User;
@@ -11,14 +10,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.util.List;
 
-@Controller
+@Controller//Marks a class as a Spring MVC controller,
+// handling HTTP requests and defining methods to process them.
+//using Rest APIs (POST,GET,PUT,DELETE)
+
 public class AuthController {
 
     private UserService userService;
-
+    // for Registration methods (saving users and searching for a user or all users)
     public AuthController(UserService userService) {
         this.userService = userService;
     }
@@ -47,7 +51,7 @@ public class AuthController {
     // handler method to handle register user form submit request
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto user,//valid: checks constraints placed in userdto(@email,@notempty,..)
-                               //@modelattribute("user"):add userdto to the model under the name user. by adding it as a model it can viewed in .html
+                               //@modelattribute("user"):add userDto to the model under the name user. by adding it as a model it can viewed in .html
                                BindingResult result,// to record error messages if any were there works with @valid
                                Model model){
         User existing = userService.findByEmail(user.getEmail());

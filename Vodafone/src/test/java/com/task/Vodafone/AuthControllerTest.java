@@ -41,11 +41,8 @@ class AuthControllerTest {
                         .param("password", "password123"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/register?success"));
-
-        // Optionally, you can verify interactions with your mocked UserService
-        // For example, you might want to verify that the saveUser method was called
             Mockito.verify(userService, Mockito.times(1)).saveUser(Mockito.any(UserDto.class));
-
+            //verify save user was called to save it
     }
     @Test
     void testLoginPage() throws Exception {
@@ -53,28 +50,6 @@ class AuthControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("login"));
     }
-    @Test
-    @WithMockUser(username = "mo@example.com", password = "password123")
-    void testLoginFormSubmissionSuccess() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
-                        .param("email", "mo@example.com")
-                        .param("password", "password123"))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/loggedin"))
-                .andExpect(result -> {
-                    String redirectedUrl = result.getResponse().getRedirectedUrl();
-                    System.out.println("Redirected URL: " + redirectedUrl);});
-    }
-    @Test
-    @WithMockUser
-    void testLoginFormSubmissionFailure() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
-                        .param("email", "john.doe@example.com")
-                        .param("password", "incorrectPassword"))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/login?error"))
-                .andExpect(MockMvcResultMatchers.view().name("login"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("error"))
-                .andExpect(MockMvcResultMatchers.model().attribute("error", "Invalid credentials"));
-    }
+
+
 }

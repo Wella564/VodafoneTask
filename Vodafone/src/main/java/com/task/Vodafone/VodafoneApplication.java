@@ -3,7 +3,7 @@ package com.task.Vodafone;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication//@configure/@componentscan/@enableautoconfiguration
 public class VodafoneApplication {
 /*Basic Logic of the code:
 00-Please note 1st user to get registered will have admin rights

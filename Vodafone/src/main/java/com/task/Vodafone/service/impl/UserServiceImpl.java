@@ -7,21 +7,21 @@ import com.task.Vodafone.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service//Marks a class as a service, typically used for business logic in the service layer.
+//it's the same as saying it's a component but in a more readble way
 public class UserServiceImpl implements UserService {
 
-    //d5lo bel DI
+    //No need for object creation thanks to DI
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
-
                            PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
 
         this.passwordEncoder = passwordEncoder;
@@ -32,9 +32,6 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
-
-        //encrypt the password once we integrate spring security
-        //user.setPassword(userDto.getPassword());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(user);
     }
