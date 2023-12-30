@@ -1,9 +1,7 @@
 package com.task.Vodafone.service.impl;
 
 import com.task.Vodafone.dto.UserDto;
-import com.task.Vodafone.entity.Role;
 import com.task.Vodafone.entity.User;
-import com.task.Vodafone.repository.RoleRepository;
 import com.task.Vodafone.repository.UserRepository;
 import com.task.Vodafone.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,15 +14,16 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+    //d5lo bel DI
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
+
     private PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository,
+
                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -37,11 +36,6 @@ public class UserServiceImpl implements UserService {
         //encrypt the password once we integrate spring security
         //user.setPassword(userDto.getPassword());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        Role role = roleRepository.findByName("ROLE_ADMIN");
-        if(role == null){
-            role = checkRoleExist();
-        }
-        user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
 
@@ -66,9 +60,5 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private Role checkRoleExist() {
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        return roleRepository.save(role);
-    }
+
 }

@@ -28,32 +28,28 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
-                                .requestMatchers("/").permitAll()
-                                .requestMatchers("/users").hasRole("ROLE_ADMIN")
-                                .requestMatchers("/loggedin").authenticated()
+
+                        authorize
+                                .requestMatchers("/register/**","/index","/").permitAll()
+                                .requestMatchers("/loggedin/**").authenticated()
+
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/loggedin")
+                                .defaultSuccessUrl("/loggedin",true)
                                 .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                //In our implement we Get the logout by clicking it in normal cases where CSRF is enabled it'll be a post
                                 .permitAll()
-                                .logoutSuccessUrl("/index")
+                                .logoutSuccessUrl("/").permitAll()
 
 
                 );
         return http.build();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
+
 }

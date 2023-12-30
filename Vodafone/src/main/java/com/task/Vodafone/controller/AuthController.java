@@ -23,10 +23,7 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String home(){
-        return "index";
-    }
+
 
     @GetMapping("/login")
     public String loginForm() {
@@ -38,7 +35,7 @@ public class AuthController {
     }
 
     // handler method to handle user registration request
-    @GetMapping("register")
+    @GetMapping("/register")
     public String showRegistrationForm(Model model){
         UserDto user = new UserDto();
         model.addAttribute("user", user);
@@ -62,7 +59,7 @@ public class AuthController {
         return "redirect:/register?success";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/loggedin/users")
     public String listRegisteredUsers(Model model){
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users", users);
