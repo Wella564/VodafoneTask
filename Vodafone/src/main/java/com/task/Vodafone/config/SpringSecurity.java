@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration//Indicates that the class has bean methods that can be used for DI
-@EnableWebSecurity//Like autowire but for websecurity so beans get wired to it
+@Configuration
+@EnableWebSecurity
 public class SpringSecurity {
 
     @Autowired
@@ -20,11 +20,11 @@ public class SpringSecurity {
     //During the login process, Spring Security will use the UserDetailsService (CustomUserDetailsService implementation)
     // to load user details based on the provided username (email in this case).
 
-    @Bean// Marks this method as a creator of beans to be handled by spring
+    @Bean
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-     //bean name is PasswordEncoder and bean object is the returned new BCryptPasswordEncoder
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()

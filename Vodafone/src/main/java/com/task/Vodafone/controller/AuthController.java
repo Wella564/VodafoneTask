@@ -15,9 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@Controller//Marks a class as a Spring MVC controller,
-// handling HTTP requests and defining methods to process them.
-//using Rest APIs (POST,GET,PUT,DELETE)
+@Controller
 
 public class AuthController {
 
@@ -40,7 +38,7 @@ public class AuthController {
     }
 
     // handler method to handle user registration request
-    @GetMapping("/register")//model to view aspects from the backend on the frontend without hardcoding the frontend
+    @GetMapping("/register")
     public String showRegistrationForm(Model model)
     {
         UserDto user = new UserDto();

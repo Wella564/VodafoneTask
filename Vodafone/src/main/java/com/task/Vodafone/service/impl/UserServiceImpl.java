@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service//Marks a class as a service, typically used for business logic in the service layer.
-//it's the same as saying it's a component but in a more readble way
+@Service
 public class UserServiceImpl implements UserService {
 
     //No need for object creation thanks to DI

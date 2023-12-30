@@ -11,7 +11,6 @@ import java.util.Collections;
 //Security Class to handle authentication with SpringSecurity Class
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-// to get the method loadUserByUsername. in our case we use email instead
     private UserRepository userRepository;
 
     public CustomUserDetailsService(UserRepository userRepository) {
